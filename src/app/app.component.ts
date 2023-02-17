@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'alexbarker-home';
+
+  public navOpened = false;
+
+  public toggleNav()  {
+    this.navOpened = this.navOpened ? false : true;
+  }
 }

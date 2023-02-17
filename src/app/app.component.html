@@ -1,5 +1,33 @@
-<div class="font-mono p-20 md:p-40 flex flex-col justify-center align-center">
-  <h1 class="text-2xl">Alex Barker</h1>
-  <h2 class="text-xl">Coming soon...</h2>
-  <a class="mt-8 text-xs underline" href="http://spotify-tracker.alexbarker.me">Playlist tracker</a>
+<div id="body-container" [attr.data-nav]="navOpened">
+  <button class="toggle" (click)="toggleNav()">
+    <i id="open" class="fa-solid fa-arrow-right"></i>
+    <i id="close" class="fa-solid fa-xmark"></i>
+  </button>
+  <nav>
+    <div class="nav-section">
+      <a class="navlink">
+        <a>About</a>
+        <!-- <img src="https://images.unsplash.com/photo-1675025679348-5906632eb467?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=905&q=80"> -->
+        <i class="fa-solid fa-user"></i>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <a class="navlink">
+        <a>Project 1</a>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <a class="navlink" href="http://spotify-tracker.alexbarker.me" target="_blank">
+        Spotify Tracker
+      </a>
+    </div>
+
+  </nav>
+  <main class="p-20 md:p-40 flex flex-col justify-center align-center">
+    <h1 class="text-2xl">Alex Barker</h1>
+    <h2 class="text-xl">Coming soon...</h2>
+    <!-- <a class="mt-8 text-xs underline" href="http://spotify-tracker.alexbarker.me">Playlist tracker</a> -->
+  </main>
 </div>

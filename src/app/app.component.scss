@@ -1,0 +1,154 @@
+$primary-color: rgb(227, 7, 20);
+
+nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: black;
+    width: clamp(250px, 20vw, 400px);
+    color: white;
+    transform: translateX(-100%);
+
+    transition: transform;
+    transition-timing-function: ease;
+    transition-duration: 400ms;
+
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    z-index: 2;
+    border-right: 1px solid $primary-color;
+}
+
+.toggle {
+    position: fixed;
+    top: 50%;
+    left: 1rem;
+    z-index: 3;
+
+    @media (min-width: 600px) {
+        left: 5rem;
+    }
+
+    background-color: $primary-color;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 5rem;
+
+    color: black;
+    text-align: center;
+    cursor: pointer;
+
+    transition: transform;
+    transition-timing-function: ease;
+    transition-duration: 400ms;
+}
+
+.toggle:hover {
+    transform: scale(1.1);
+}
+
+.toggle:active {
+    transform: scale(0.9);
+}
+
+.toggle > i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    transition: transform;
+    transition-timing-function: ease;
+    transition-duration: 400ms;
+}
+
+
+#body-container {
+    height: 100vh;
+    color: white;
+    overflow: hidden;
+    background-color: black;
+    font-family: "Space Mono", monospace;
+}
+
+main {
+    transition: transform;
+    transition-timing-function: ease;
+    transition-duration: 400ms;
+}
+
+#body-container[data-nav="true"] > main {
+    transform: translatex(20vw);
+}
+
+#body-container[data-nav="true"] > nav {
+    transform: translatex(0vw);
+}
+
+#body-container[data-nav="true"] > .toggle {
+    transform: translateY(35vh);
+}
+
+#body-container[data-nav="true"] > .toggle > i {
+    transform: translate(-50%, -50%) rotate(180deg);
+}
+
+#body-container[data-nav="true"] > .toggle > #open {
+    opacity: 0;
+}
+
+#body-container[data-nav="true"] > .toggle > #close {
+    opacity: 1;
+}
+
+#body-container[data-nav="false"] > .toggle > #open {
+    opacity: 1;
+}
+
+#body-container[data-nav="false"] > .toggle > #close {
+    opacity: 0;
+}
+
+
+.navlink > i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $primary-color;
+    font-size: 2rem;
+    height: 5rem;
+    width: 100%;
+    border: 1px solid $primary-color;
+    border-radius: 0.5rem;
+    margin-top: 0.2rem;
+
+    transition: background-color color;
+    transition-timing-function: ease;
+    transition-duration: 200ms;
+}
+
+.navlink:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.navlink:hover i {
+    background-color: $primary-color;
+    color: black;
+}
+
+.navlink > a {
+    
+}
+
+.nav-section {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid $primary-color;
+}
+
+.nav-section:last-child {
+    border-bottom: 0px;
+}
