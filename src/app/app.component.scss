@@ -89,7 +89,7 @@ main {
 }
 
 #body-container[data-nav="true"] > .toggle {
-    transform: translateY(35vh);
+    transform: translateY(30vh);
 }
 
 #body-container[data-nav="true"] > .toggle > i {
@@ -110,6 +110,10 @@ main {
 
 #body-container[data-nav="false"] > .toggle > #close {
     opacity: 0;
+}
+
+#body-container[data-nav="true"] > .toggle > .text {
+    animation: none;
 }
 
 
@@ -151,4 +155,65 @@ main {
 
 .nav-section:last-child {
     border-bottom: 0px;
+}
+
+.text {
+    color: white;
+    opacity: 0;
+    transition: transform opacity;
+    transition-timing-function: ease;
+    transition-duration: 400ms;
+    animation-name: menu-popup;
+    animation-duration: 7.5s;
+    animation-delay: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+}
+
+@keyframes menu-popup {
+    0% {
+        transform: translateY(0rem);
+        opacity: 0;
+    }
+
+    7% {
+        transform: translateY(-3.7rem);
+        opacity: 1;
+    }
+
+    9% {
+        transform: translateY(-3.5rem);
+    }
+
+    // 12% {
+    //     transform: translateX(-0.5rem) translateY(-3.5rem);
+    // }
+
+    // 14% {
+    //     transform: translateX(0rem) translateY(-3.5rem);
+    // }
+
+    // 16% {
+    //     transform: translateX(0.5rem) translateY(-3.5rem);
+    // }
+
+    20% {
+        transform: translateY(-3.5rem);
+        opacity: 1;
+    }
+
+    29% {
+        transform: translateY(-3.5rem);
+        opacity: 1;
+    }
+
+    40% {
+        transform: translateY(0rem);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0rem);
+        opacity: 0;
+    }
 }
