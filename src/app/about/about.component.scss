@@ -1,7 +1,11 @@
 $primary-color: rgb(227, 7, 20);
 
 .about {
-    padding: 2rem 12rem;
+    padding: 2rem 2rem 2rem 4rem;
+
+    @media (min-width: 600px) {
+        padding: 2rem 12rem;
+    }
 }
 
 .parallax-bg {
@@ -20,7 +24,11 @@ $primary-color: rgb(227, 7, 20);
 
 .about-content {
     margin-top: 4rem;
-    margin-right: 12rem;
+    margin-right: 2rem;
+
+    @media (min-width: 600px) {
+        margin-right: 12rem;
+    }
 }
 
 span {
@@ -31,11 +39,16 @@ span {
 .technologies {
     z-index: 2;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     justify-content: space-around;
     padding: 0 2rem;
     flex-wrap: wrap;
+    gap: 2rem;
+
+    @media (min-width: 600px) {
+        flex-direction: row;
+    }
 }
 
 .technologies > div {
