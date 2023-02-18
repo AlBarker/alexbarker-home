@@ -1,0 +1,86 @@
+$primary-color: rgb(227, 7, 20);
+
+.about {
+    padding: 2rem 12rem;
+}
+
+.parallax-bg {
+    background-image: url("https://images.unsplash.com/photo-1594300157693-a741f98738c2");
+    
+    opacity: 0.3;
+    height: 20rem;
+    width: 100%;
+
+    // position: absolute;
+    // top: calc(50% - 10rem);
+    // left: 0;
+
+    object-fit: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.about-content {
+    margin-top: 4rem;
+    margin-right: 12rem;
+}
+
+span {
+    background-color: #1e1e1e;
+    padding: 0.05rem;
+}
+
+.technologies {
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    padding: 0 2rem;
+    flex-wrap: wrap;
+}
+
+.technologies > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.technologies > div > i {
+    font-size: 4rem;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.technologies > div > h2 {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+h1, h2 {
+    text-decoration: underline;
+}
+
+.experience > .header {
+    margin-top: 4rem;
+}
+
+.experience > .header > h3:first-child {
+    color: #aaaaaa;
+}
+
+.experience > .header > .time {
+    color: $primary-color;
+}
+
+.experience > .details {
+    background-color: #1e1e1e;
+    padding: 1rem;
+}
+
+.details > ul {
+    list-style-type: disc;
+    margin-left: 2rem;
+}
