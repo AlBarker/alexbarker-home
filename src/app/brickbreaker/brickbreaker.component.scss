@@ -1,0 +1,9 @@
+.container {
+    padding: 2rem 2rem 2rem 4rem;
+    height: 90vh;
+    width: calc(600px + 24rem);
+
+    @media (min-width: 600px) {
+        padding: 2rem 12rem;
+    }
+}
