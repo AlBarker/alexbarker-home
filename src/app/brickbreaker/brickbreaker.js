@@ -5,15 +5,25 @@ const brickCols = 10;
 const paddleWidth = 80;
 const paddleHeight = 10;
 const gameWindowWidth = 600;
-
+const gameWindowHeight = 500;
 const paddleSpeed = 10;
+const ballSpeed = 3;
+const ballRadius = 8;
 
 var paddlePos = {
     x: gameWindowWidth / 2 - paddleWidth / 2,
     y: 480,
-}
-
+};
 var newPaddlePos = paddlePos;
+
+var ballPos = { 
+    x: 100,
+    y: 200,
+};
+
+var newBallPos = ballPos;
+
+var ballTrajectory = 20;
 
 window.onload = () => {
     drawGameBoard();
@@ -48,7 +58,28 @@ drawPaddle = (pen) => {
 
 drawBall = (pen) => {
     pen.strokeStyle = "yellow";
-    pen.arc(canvas.width / 2, canvas.height / 2, 10, 0, 2 * Math.PI, false);
+
+    // top left corner
+    var rectX = ballPos.x - ballRadius;
+    var rectY = ballPos.y - ballRadius;
+
+    pen.clearRect(rectX - 1, rectY - 1, ballRadius * 2  + 2, ballRadius * 2 + 2);
+
+    ballPos = {
+        x: ballPos.x + ballSpeed * Math.cos(ballTrajectory * Math.PI / 180),
+        y: ballPos.y + ballSpeed * Math.sin(ballTrajectory * Math.PI / 180),
+    }
+
+    if(ballPos.x <= 0 || ballPos.x >= gameWindowWidth) {
+        ballTrajectory =  180 - ballTrajectory;
+    }
+
+    if(ballPos.y <= 0 || ballPos.y >= gameWindowHeight) {
+        ballTrajectory =  360 - ballTrajectory;
+    }
+
+    pen.beginPath();
+    pen.arc(ballPos.x, ballPos.y, ballRadius, 0, 2 * Math.PI, false);
     pen.stroke();
 }
 
@@ -73,5 +104,5 @@ drawGameBoard = (timestamp) => {
     drawPaddle(pen);
     drawBall(pen);
         
-    requestAnimationFrame(drawGameBoard);
+    requestAnimationFrame(drawGameBoard);   
 }
