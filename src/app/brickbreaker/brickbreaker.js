@@ -21,6 +21,7 @@ var ballTrajectory;
 var currentBricks;
 var allbricks;
 var currentBrickCount;
+var prevTimestamp;
 
 initBrickArray = (brickRows, brickCols, brickWidth, brickHeight) => {
     var toReturn = [];
@@ -62,7 +63,7 @@ drawPaddle = (pen) => {
     pen.fillRect(paddlePos.x, paddlePos.y, paddleWidth, paddleHeight);
 }
 
-drawBall = (pen) => {
+drawBall = (pen, timeDiff) => {
     pen.strokeStyle = ballColourStyle;
 
     // top left corner
@@ -70,11 +71,13 @@ drawBall = (pen) => {
     var rectY = ballPos.y - ballRadius;
 
     pen.clearRect(rectX - 1, rectY - 1, ballRadius * 2  + 2, ballRadius * 2 + 2);
-    console.log(ballSpeed);
+
+    var velocity = ballSpeed * timeDiff;
+    console.log(velocity)
 
     ballPos = {
-        x: ballPos.x + ballSpeed * Math.cos(ballTrajectory * Math.PI / 180),
-        y: ballPos.y + ballSpeed * Math.sin(ballTrajectory * Math.PI / 180),
+        x: ballPos.x + velocity * Math.cos(ballTrajectory * Math.PI / 180),
+        y: ballPos.y + velocity * Math.sin(ballTrajectory * Math.PI / 180),
     }
 
     if (didCollideWithPaddle(ballPos, ballRadius, paddlePos, paddleWidth)) {
@@ -177,9 +180,18 @@ drawGameBoard = (timestamp) => {
     var ctx = document.getElementById("canvas");
     var pen = ctx.getContext("2d");
 
+    var timeDiff = 1;
+    if (timestamp) {
+        timeDiff = timestamp - prevTimestamp;
+    }
+
+    if (!timeDiff) {
+        timeDiff = 1;
+    }
+    prevTimestamp = timestamp;
     drawBricks(pen);
     drawPaddle(pen);
-    drawBall(pen);
+    drawBall(pen, timeDiff);
         
     requestAnimationFrame(drawGameBoard);   
 }
@@ -206,7 +218,7 @@ startGame = () => {
     };
 
     ballTrajectory = 45;
-    ballSpeed = 4;
+    ballSpeed = 0.3;
 
     currentBricks = initBrickArray(brickRows, brickCols, brickWidth, brickHeight);
 
@@ -214,6 +226,7 @@ startGame = () => {
     currentBrickCount = 0;
     newPaddlePos = paddlePos;
     newBallPos = ballPos;
+    prevTimestamp = 0;
 
     var pen = canvas.getContext("2d");
     pen.clearRect(0, 0, gameWindowWidth, gameWindowHeight);
