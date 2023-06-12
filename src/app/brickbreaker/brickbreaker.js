@@ -92,10 +92,15 @@ drawBall = (pen) => {
     }
 
 
-    var brickCollisionIndex = didCollideWithBrick(ballPos, ballRadius, currentBricks, brickWidth, brickHeight); 
-    if (brickCollisionIndex >= 0) {
-        ballTrajectory = 360 - ballTrajectory;
-        currentBricks.splice(brickCollisionIndex, 1);
+    var brickCollider = didCollideWithBrick(ballPos, ballRadius, currentBricks, brickWidth, brickHeight); 
+    if (brickCollider.index >= 0) {
+        if (brickCollider.isVertical) {
+            ballTrajectory = 360 - ballTrajectory;
+        } else {
+            ballTrajectory = 180 - ballTrajectory;
+        }
+
+        currentBricks.splice(brickCollider.index, 1);
 
         console.log(currentBricks);
     }
@@ -148,9 +153,31 @@ didCollideWithPaddle = (ballPos, ballRadius, paddlePos, paddleWidth) => {
 
 didCollideWithBrick = (ballPos, ballRadius, bricks, brickWidth, brickheight) => {
     for (var i = 0; i < bricks.length; i++) {
-        if (ballPos.x - ballRadius > bricks[i].x  && ballPos.x + ballRadius < bricks[i].x + brickWidth) {
-            if (ballPos.y - ballRadius < bricks[i].y + brickHeight) {
-                return i;
+        // left side of ball is inside left brick edge && right side of ball is inside right brick edge
+        if (ballPos.x - ballRadius > bricks[i].x && ballPos.x + ballRadius < bricks[i].x + brickWidth) {
+
+            // top of ball inside bottom of brick and top of ball below brick
+            if (ballPos.y - ballRadius < bricks[i].y + brickHeight && ballPos.y - ballRadius > bricks[i].y) {
+                return { index: i, isVertical: true };
+            }
+
+            // bottom of ball inside top of brick and bottom of ball above brick
+            if (ballPos.y + ballRadius > bricks[i].y && ballPos.y + ballRadius < bricks[i].y) {
+                return { index: i, isVertical: true };
+            }
+        }
+
+        // top of ball is inside top of brick and bottom of ball is inside bottom of brick
+        if (ballPos.y - ballRadius > bricks[i].y && ballPos.y + ballRadius < bricks[i].y + brickHeight) {
+
+            // right side of ball inside left of brick and left side of ball left of brick
+            if (ballPos.x + ballRadius > bricks[i].x && ballPos.x - ballRadius < bricks[i].x) {
+                return { index : i, isVertical: false };
+            }
+
+            // left side of ball inside right of brick and right side of ball right of brick
+            if (ballPos.x - ballRadius < bricks[i].x + brickWidth && ballPos.x + ballRadius > bricks[i].x + brickWidth) {
+                return { index: i, isVertical: false};
             }
         }
     }
