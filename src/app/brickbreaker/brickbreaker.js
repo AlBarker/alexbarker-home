@@ -70,6 +70,10 @@ drawBall = (pen) => {
         y: ballPos.y + ballSpeed * Math.sin(ballTrajectory * Math.PI / 180),
     }
 
+    if (didCollideWithPaddle(ballPos, ballRadius, paddlePos, paddleWidth)) {
+        ballTrajectory = 360 - ballTrajectory;
+    }
+
     if(ballPos.x <= 0 || ballPos.x >= gameWindowWidth) {
         ballTrajectory =  180 - ballTrajectory;
     }
@@ -94,6 +98,15 @@ drawBricks = (pen) => {
             pen.fillRect(x1, y1, brickWidth - 1, brickHeight - 1);
         }
     }
+}
+
+didCollideWithPaddle = (ballPos, ballRadius, paddlePos, paddleWidth) => {
+    if (ballPos.x + ballRadius <= paddlePos.x + paddleWidth && ballPos.x >= paddlePos.x) {
+        if (ballPos.y + ballRadius >= paddlePos.y) {
+            return true;
+        }
+    }
+    return false;
 }
 
 drawGameBoard = (timestamp) => {
