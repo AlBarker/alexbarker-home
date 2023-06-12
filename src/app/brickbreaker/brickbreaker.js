@@ -15,15 +15,30 @@ var paddlePos = {
     y: 480,
 };
 var newPaddlePos = paddlePos;
-
 var ballPos = { 
     x: 100,
     y: 200,
 };
-
 var newBallPos = ballPos;
+var ballTrajectory = 300;
 
-var ballTrajectory = 20;
+initBrickArray = (brickRows, brickCols, brickWidth, brickHeight) => {
+    var toReturn = [];
+    for (let i = 0; i < brickRows; i++) {
+        for (let j = 0; j < brickCols; j++) {
+            var x1 = j * brickWidth + 1;
+            var y1 = i * brickHeight + 1;
+            
+            toReturn.push({ x: x1, y: y1 });
+        }
+    }
+
+    return toReturn;
+}
+
+var currentBricks = initBrickArray(brickRows, brickCols, brickWidth, brickHeight);
+var allbricks = [...currentBricks];
+var currentBrickCount = 0;
 
 window.onload = () => {
     drawGameBoard();
@@ -48,6 +63,8 @@ document.addEventListener('keydown', function(event) {
     }
     console.log(key);
 });
+
+
 
 drawPaddle = (pen) => {
     pen.fillStyle = "green";
@@ -74,6 +91,15 @@ drawBall = (pen) => {
         ballTrajectory = 360 - ballTrajectory;
     }
 
+
+    var brickCollisionIndex = didCollideWithBrick(ballPos, ballRadius, currentBricks, brickWidth, brickHeight); 
+    if (brickCollisionIndex >= 0) {
+        ballTrajectory = 360 - ballTrajectory;
+        currentBricks.splice(brickCollisionIndex, 1);
+
+        console.log(currentBricks);
+    }
+
     if(ballPos.x <= 0 || ballPos.x >= gameWindowWidth) {
         ballTrajectory =  180 - ballTrajectory;
     }
@@ -88,15 +114,26 @@ drawBall = (pen) => {
 }
 
 drawBricks = (pen) => {
+    if (currentBrickCount === currentBricks.length) {
+        return;
+    }
+
+    currentBrickCount = currentBricks.length;
+    console.countReset('clear')
+    console.log('clearing bricks')
+    for (let i = 0; i < allbricks.length; i ++) {
+        var brick = allbricks[i];
+        pen.clearRect(brick.x, brick.y, brickWidth -1, brickHeight -1);
+        console.count('clear')
+    }
+    
+    console.countReset('draw')
+    console.log('drawing bricks')
     pen.fillStyle = "red";
-
-    for (let i = 0; i < brickRows; i++) {
-        for (let j = 0; j < brickCols; j++) {
-            var x1 = j * brickWidth + 1;
-            var y1 = i * brickHeight + 1;
-
-            pen.fillRect(x1, y1, brickWidth - 1, brickHeight - 1);
-        }
+    for (let i = 0; i < currentBricks.length; i++) {
+        var brick = currentBricks[i];
+        pen.fillRect(brick.x, brick.y, brickWidth - 1, brickHeight - 1);
+        console.count('draw')
     }
 }
 
@@ -107,6 +144,17 @@ didCollideWithPaddle = (ballPos, ballRadius, paddlePos, paddleWidth) => {
         }
     }
     return false;
+}
+
+didCollideWithBrick = (ballPos, ballRadius, bricks, brickWidth, brickheight) => {
+    for (var i = 0; i < bricks.length; i++) {
+        if (ballPos.x - ballRadius > bricks[i].x  && ballPos.x + ballRadius < bricks[i].x + brickWidth) {
+            if (ballPos.y - ballRadius < bricks[i].y + brickHeight) {
+                return i;
+            }
+        }
+    }
+    return -1;
 }
 
 drawGameBoard = (timestamp) => {
