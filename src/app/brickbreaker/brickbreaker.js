@@ -1,4 +1,3 @@
-window.onload = () => {
 const brickWidth = 60;
 const brickHeight = 20;
 const brickRows = 5;
@@ -6,13 +5,53 @@ const brickCols = 10;
 const paddleWidth = 80;
 const paddleHeight = 10;
 
-    var ctx = document.getElementById("canvas");
+const paddleSpeed = 10;
 
-    // ctx.width  = window.innerWidth;
-    // ctx.height = window.innerHeight;
+var paddlePos = {
+    x: 600 / 2 - paddleWidth / 2,
+    y: 480,
+}
 
-    var pen = ctx.getContext("2d");
+var newPaddlePos = paddlePos;
 
+window.onload = () => {
+    drawGameBoard();
+}
+
+document.addEventListener('keydown', function(event) {
+    const key = event.key;
+    if (key === 'ArrowLeft') {
+        event.preventDefault();
+        newPaddlePos = {
+            x: paddlePos.x - paddleSpeed,
+            y: paddlePos.y,
+        }
+    }
+
+    if (key === 'ArrowRight') {
+        event.preventDefault();
+        newPaddlePos = {
+            x: paddlePos.x + paddleSpeed,
+            y: paddlePos.y,
+        }
+    }
+    console.log(key);
+});
+
+drawPaddle = (pen) => {
+    pen.fillStyle = "green";
+    pen.clearRect(paddlePos.x, paddlePos.y, paddleWidth, paddleHeight);
+    paddlePos = newPaddlePos;
+    pen.fillRect(paddlePos.x, paddlePos.y, paddleWidth, paddleHeight);
+}
+
+drawBall = (pen) => {
+    pen.strokeStyle = "yellow";
+    pen.arc(canvas.width / 2, canvas.height / 2, 10, 0, 2 * Math.PI, false);
+    pen.stroke();
+}
+
+drawBricks = (pen) => {
     pen.fillStyle = "red";
 
     for (let i = 0; i < brickRows; i++) {
@@ -24,17 +63,17 @@ const paddleHeight = 10;
             var y2 = y1 + brickHeight - 2;
 
             pen.fillRect(x1, y1, brickWidth - 1, brickHeight - 1);
-            // pen.strokeRect(x1, x2, y1, y2);
         }
     }
-    console.log(canvas.width)
-    console.log(canvas.height)
-    pen.fillStyle = "green";
+}
 
+drawGameBoard = (timestamp) => {
+    var ctx = document.getElementById("canvas");
+    var pen = ctx.getContext("2d");
 
-    pen.fillRect(canvas.width / 2 - paddleWidth / 2, 480, paddleWidth, paddleHeight);
-    
-    pen.strokeStyle = "yellow";
-    pen.arc(canvas.width / 2, canvas.height / 2, 10, 0, 2 * Math.PI, false);
-    pen.stroke();
-}   
+    drawBricks(pen);
+    drawPaddle(pen);
+    drawBall(pen);
+        
+    requestAnimationFrame(drawGameBoard);
+}
