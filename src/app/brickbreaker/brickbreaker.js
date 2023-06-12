@@ -4,11 +4,12 @@ const brickRows = 5;
 const brickCols = 10;
 const paddleWidth = 80;
 const paddleHeight = 10;
+const gameWindowWidth = 600;
 
 const paddleSpeed = 10;
 
 var paddlePos = {
-    x: 600 / 2 - paddleWidth / 2,
+    x: gameWindowWidth / 2 - paddleWidth / 2,
     y: 480,
 }
 
@@ -23,7 +24,7 @@ document.addEventListener('keydown', function(event) {
     if (key === 'ArrowLeft') {
         event.preventDefault();
         newPaddlePos = {
-            x: paddlePos.x - paddleSpeed,
+            x: Math.max(0, paddlePos.x - paddleSpeed),
             y: paddlePos.y,
         }
     }
@@ -31,7 +32,7 @@ document.addEventListener('keydown', function(event) {
     if (key === 'ArrowRight') {
         event.preventDefault();
         newPaddlePos = {
-            x: paddlePos.x + paddleSpeed,
+            x: Math.min(gameWindowWidth - paddleWidth, paddlePos.x + paddleSpeed),
             y: paddlePos.y,
         }
     }
@@ -58,9 +59,6 @@ drawBricks = (pen) => {
         for (let j = 0; j < brickCols; j++) {
             var x1 = j * brickWidth + 1;
             var y1 = i * brickHeight + 1;
-
-            var x2 = x1 + brickWidth - 2;
-            var y2 = y1 + brickHeight - 2;
 
             pen.fillRect(x1, y1, brickWidth - 1, brickHeight - 1);
         }
