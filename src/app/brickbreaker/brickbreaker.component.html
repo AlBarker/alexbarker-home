@@ -1,13 +1,35 @@
 <div class="container mb-8">
     <p class="text-4xl mb-8">Brickbreaker</p>
 
-    <div class="border-x h-full w-[624px] px-3">
-        <canvas id="canvas" width="600" height="500">
+    <div class="hidden md:block w-[624px] h-[500px] px-3">
+        <div id="start" class="flex flex-col items-center justify-center h-full">
+            <p class="pb-8">Made with javacript and the HTML canvas</p>
+            <button onclick="startGame()" class="border rounded-sm px-6 py-2 hover:bg-white hover:text-black">
+                START
+            </button>
+        </div>
 
+        <canvas id="canvas" style="display: none;" width="600" height="500">
         </canvas>
 
+        <div id="game-over" class="flex flex-col items-center justify-center h-full">
+            <p class="pb-8">You lose :(</p>
+            <button onclick="startGame()" class="border rounded-sm px-6 py-2 hover:bg-white hover:text-black">
+                PLAY AGAIN
+            </button>
+        </div>
+
+        <div id="won" class="flex flex-col items-center justify-center h-full">
+            <p class="pb-8">You win!</p>
+            <button onclick="startGame()" class="border rounded-sm px-6 py-2 hover:bg-white hover:text-black">
+                PLAY AGAIN
+            </button>
+        </div>
     </div>
 
+    <div class="md:hidden">
+        <p>Mobile not supported</p>
+    </div>
 </div>
 
 <script src="./brickbreaker.js"></script>

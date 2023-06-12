@@ -6,21 +6,21 @@ const paddleWidth = 80;
 const paddleHeight = 10;
 const gameWindowWidth = 600;
 const gameWindowHeight = 500;
-const paddleSpeed = 10;
-const ballSpeed = 3;
+const paddleSpeed = 12;
 const ballRadius = 8;
+const brickColourStyle = 'rgb(227, 7, 20)';
+const paddleColourStyle = 'rgb(227, 7, 20)';
+const ballColourStyle = 'white';
 
-var paddlePos = {
-    x: gameWindowWidth / 2 - paddleWidth / 2,
-    y: 480,
-};
-var newPaddlePos = paddlePos;
-var ballPos = { 
-    x: 100,
-    y: 200,
-};
-var newBallPos = ballPos;
-var ballTrajectory = 300;
+var ballSpeed;
+var paddlePos;
+var newPaddlePos;
+var ballPos;
+var newBallPos;
+var ballTrajectory;
+var currentBricks;
+var allbricks;
+var currentBrickCount;
 
 initBrickArray = (brickRows, brickCols, brickWidth, brickHeight) => {
     var toReturn = [];
@@ -34,14 +34,6 @@ initBrickArray = (brickRows, brickCols, brickWidth, brickHeight) => {
     }
 
     return toReturn;
-}
-
-var currentBricks = initBrickArray(brickRows, brickCols, brickWidth, brickHeight);
-var allbricks = [...currentBricks];
-var currentBrickCount = 0;
-
-window.onload = () => {
-    drawGameBoard();
 }
 
 document.addEventListener('keydown', function(event) {
@@ -61,26 +53,24 @@ document.addEventListener('keydown', function(event) {
             y: paddlePos.y,
         }
     }
-    console.log(key);
 });
 
-
-
 drawPaddle = (pen) => {
-    pen.fillStyle = "green";
+    pen.fillStyle = paddleColourStyle;
     pen.clearRect(paddlePos.x, paddlePos.y, paddleWidth, paddleHeight);
     paddlePos = newPaddlePos;
     pen.fillRect(paddlePos.x, paddlePos.y, paddleWidth, paddleHeight);
 }
 
 drawBall = (pen) => {
-    pen.strokeStyle = "yellow";
+    pen.strokeStyle = ballColourStyle;
 
     // top left corner
     var rectX = ballPos.x - ballRadius;
     var rectY = ballPos.y - ballRadius;
 
     pen.clearRect(rectX - 1, rectY - 1, ballRadius * 2  + 2, ballRadius * 2 + 2);
+    console.log(ballSpeed);
 
     ballPos = {
         x: ballPos.x + ballSpeed * Math.cos(ballTrajectory * Math.PI / 180),
@@ -89,8 +79,7 @@ drawBall = (pen) => {
 
     if (didCollideWithPaddle(ballPos, ballRadius, paddlePos, paddleWidth)) {
         ballTrajectory = 360 - ballTrajectory;
-    }
-
+    }   
 
     var brickCollider = didCollideWithBrick(ballPos, ballRadius, currentBricks, brickWidth, brickHeight); 
     if (brickCollider.index >= 0) {
@@ -101,16 +90,21 @@ drawBall = (pen) => {
         }
 
         currentBricks.splice(brickCollider.index, 1);
-
-        console.log(currentBricks);
+        if (currentBricks.length === 0) { 
+            handleWin();
+        }
     }
 
     if(ballPos.x <= 0 || ballPos.x >= gameWindowWidth) {
         ballTrajectory =  180 - ballTrajectory;
     }
 
-    if(ballPos.y <= 0 || ballPos.y >= gameWindowHeight) {
+    if(ballPos.y <= 0) {
         ballTrajectory =  360 - ballTrajectory;
+    }
+
+    if (ballPos.y >= gameWindowHeight) {
+        handleLoss();
     }
 
     pen.beginPath();
@@ -124,21 +118,16 @@ drawBricks = (pen) => {
     }
 
     currentBrickCount = currentBricks.length;
-    console.countReset('clear')
-    console.log('clearing bricks')
-    for (let i = 0; i < allbricks.length; i ++) {
-        var brick = allbricks[i];
+
+    for (let i = 0; i < allBricks.length; i ++) {
+        var brick = allBricks[i];
         pen.clearRect(brick.x, brick.y, brickWidth -1, brickHeight -1);
-        console.count('clear')
     }
     
-    console.countReset('draw')
-    console.log('drawing bricks')
-    pen.fillStyle = "red";
+    pen.fillStyle = brickColourStyle;
     for (let i = 0; i < currentBricks.length; i++) {
         var brick = currentBricks[i];
         pen.fillRect(brick.x, brick.y, brickWidth - 1, brickHeight - 1);
-        console.count('draw')
     }
 }
 
@@ -193,4 +182,57 @@ drawGameBoard = (timestamp) => {
     drawBall(pen);
         
     requestAnimationFrame(drawGameBoard);   
+}
+
+startGame = () => {
+    var canvas = document.getElementById("canvas");
+    var startContainer = document.getElementById("start");
+    var gameOverContainer = document.getElementById("game-over");
+    var wonContainer = document.getElementById("won");
+
+    canvas.style.display = 'block';
+    startContainer.style.display = 'none';
+    gameOverContainer.style.display = 'none';
+    wonContainer.style.display = 'none';
+
+    ballPos = { 
+        x: 100,
+        y: 200,
+    };
+
+    paddlePos = {
+        x: gameWindowWidth / 2 - paddleWidth / 2,
+        y: 480,
+    };
+
+    ballTrajectory = 45;
+    ballSpeed = 4;
+
+    currentBricks = initBrickArray(brickRows, brickCols, brickWidth, brickHeight);
+
+    allBricks = [...currentBricks];
+    currentBrickCount = 0;
+    newPaddlePos = paddlePos;
+    newBallPos = ballPos;
+
+    var pen = canvas.getContext("2d");
+    pen.clearRect(0, 0, gameWindowWidth, gameWindowHeight);
+
+    drawGameBoard();
+}
+
+handleLoss = () => {
+    var canvas = document.getElementById("canvas");
+    var gameOverContainer = document.getElementById("game-over");
+
+    canvas.style.display = 'none';
+    gameOverContainer.style.display = 'flex';
+}
+
+handleWin = () => {
+    var canvas = document.getElementById("canvas");
+    var wonContainer = document.getElementById("won");
+
+    canvas.style.display = 'none';
+    wonContainer.style.display = 'flex';
 }
