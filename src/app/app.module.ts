@@ -7,6 +7,7 @@ import { HottestBurn100Component } from './hottest-burn100/hottest-burn100.compo
 import { Countdown2022Component } from './hottest-burn100/countdown2022/countdown2022.component';
 import { OrdinalPipe } from './pipes/ordinal.pipe';
 import { AboutComponent } from './about/about.component';
+import { BrickbreakerComponent } from './brickbreaker/brickbreaker.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { AboutComponent } from './about/about.component';
     Countdown2022Component,
     OrdinalPipe,
     AboutComponent,
+    BrickbreakerComponent,
   ],
   imports: [
     BrowserModule,
