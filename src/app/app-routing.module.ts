@@ -13,7 +13,7 @@ import { BrickbreakerComponent } from './brickbreaker/brickbreaker.component';
 const routes: Routes = [
   { path: '', component: AboutComponent },
   { path: 'hottest-burn100', component: HottestBurn100Component },
-  { path: 'brickbreaker', component: BrickbreakerComponent },
+  //{ path: 'brickbreaker', component: BrickbreakerComponent },
   { path: 'hottest-burn100/2022', component: Countdown2022Component },
   { path: 'hottest-burn100/2021', component: Countdown2021Component },
   { path: 'hottest-burn100/2020', component: Countdown2020Component },
