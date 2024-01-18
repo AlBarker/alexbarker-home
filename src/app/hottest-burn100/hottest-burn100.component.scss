@@ -1,0 +1,39 @@
+$primary-color: rgb(227, 7, 20);
+
+.grid-container {
+    display: grid;
+    gap: 2rem 2rem;
+    padding: 2rem 2rem 2rem 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    justify-items: center;
+
+    @media (min-width: 600px) {
+        padding: 2rem 12rem;
+    }
+}
+
+.link {
+    width: 100%;
+    text-align: center;
+    padding: 3rem 4rem;
+    border: 1px solid $primary-color;
+    border-radius: 1rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+
+    transition: background-color color;
+    transition-timing-function: ease;
+    transition-duration: 200ms;
+
+    @media (min-width: 600px) {
+        max-width: 20rem;
+        padding: 5rem 8rem;
+    }
+}
+
+.link:hover {
+    background-color: $primary-color;
+    color: black;
+    text-decoration: underline;
+    cursor: pointer;
+}
