@@ -22,7 +22,7 @@ export class Countdown2023Component {
   public nowPlayingTrack$: Observable<TrackModel | undefined>;
   public noTracksToShow$ = new BehaviorSubject<boolean>(false);
   public error$ = new Subject<string>;
-  private apiUrl = 'https://localhost:44377/track/'
+  private apiUrl = 'http://online-recip-zxcowf4ir10d-330824678.ap-southeast-2.elb.amazonaws.com/track/'
 
 
   constructor(private httpClient: HttpClient) {
