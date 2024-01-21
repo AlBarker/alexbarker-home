@@ -1,0 +1,126 @@
+<div class="flex justify-center">
+    <div #background
+      class="bg-black -z-10">
+    </div>
+  
+    <div class="relative text-white w-full max-w-2xl">
+      <div>
+        <h1 class="text-3xl pt-2 font-bold w-full text-center border-b-2 border-slate-900">Hottest Burn100 2023</h1>
+        <ng-container *ngIf="!(noTracksToShow$ | async) else noTracks">
+          <ng-container *ngIf="error$ | async let error else tracklist">
+            <div class="text-center mt-4">
+              <p>Something went wrong...</p>
+              <p>Error messsage: {{error}}</p>
+            </div>
+          </ng-container>
+  
+          <ng-template #tracklist>
+            <div *ngIf="nowPlayingTrack$ | async let nowPlaying else loadingTemplate" class="mt-4 w-full">
+              <div class="px-8 flex flex-col items-center mb-10">
+                <ng-container *ngIf="nowPlaying.position !== 1 else winningTrack">
+  
+                  <h2 class="font-bold text-sm mb-2">Now Playing</h2>
+                  <img class="animate-pulse" [src]="getAlbumArt(nowPlaying.albumArt)">
+  
+                  <div class="w-full flex flex-col items-center justify-between">
+                    <div class="flex flex-col my-4 w-full">
+                      <div class="flex flex-col mb-2 w-full">
+                        <span class="font-bold text-lg truncate">{{nowPlaying.name}}</span>
+                        <span class="truncate">{{nowPlaying.artist}}</span>
+                      </div>
+                    </div>
+                    <div class="flex w-full justify-between">
+                      <img class="animate-bounce h-40 w-40" [src]="getHeadImage(nowPlaying.addedByImage)">
+                      <div class="flex flex-col items-center justify-between">
+                        <div class="flex flex-col items-center">
+                          <span class="text-xs">Track #</span>
+                          <span class="text-8xl font-bold leading-[5rem]">{{nowPlaying.position}}</span>
+                        </div>
+                        <div *ngIf="tracksByUser$ | async let tracksByUser" class="text-xs pb-2">
+                          <span>{{nowPlaying.addedByName}}'s {{tracksByUser[nowPlaying.addedByName] | ordinal}}
+                            track</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+                </ng-container>
+              </div>
+              <ng-template #winningTrack>
+                <h2 class="font-bold text-sm mb-2">Winning Track</h2>
+                <img class="animate-pulse" [src]="getAlbumArt(nowPlaying.albumArt)">
+  
+                <div class="w-full flex flex-col items-center justify-between">
+                  <div class="flex flex-col my-4 w-full">
+                    <div class="flex flex-col mb-2 w-full">
+                      <span class="font-bold text-lg truncate">{{nowPlaying.name}}</span>
+                      <span class="truncate">{{nowPlaying.artist}}</span>
+                    </div>
+                  </div>
+                  <div class=" animate-bounce flex w-full items-center justify-between">
+                    <img class="h-40 w-40" [src]="getHeadImage(nowPlaying.addedByImage)">
+                    <img class="absolute h-40 w-40" src="/assets/images/crown.png">
+  
+                    <div class="flex flex-col items-center">
+                      <div class="flex flex-col items-center">
+                        <span class="text-8xl font-bold leading-[5rem]">#{{nowPlaying.position}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+  
+            </div>
+          </ng-template>
+  
+  
+        </ng-container>
+      </div>
+  
+  
+      <div class="flex p-4 mx-4 my-6 border-2 rounded border-slate-700" *ngFor="let track of tracks$ | async">
+        <div>
+          <div class="relative w-fit font-bold bottom-8 right-7 text-4xl rotate-[325deg]">{{track.position}}</div>
+          <!-- <div class="font-bold text-4xl">{{track.position}}</div> -->
+          <img class=" w-40 -mt-10" [src]="getAlbumArt(track.albumArt)">
+        </div>
+        <div class="w-3/4 grow flex flex-col mx-4 z-10">
+          <span class="font-bold">{{track.name}}</span>
+          <span class="text-sm">{{track.artist}}</span>
+          <!-- <span>{{track.addedByName}}</span> -->
+          <div *ngIf="tracksByUser$ | async let tracksByUser">
+            <span>Tracks so far: {{tracksByUser[track.addedByName]}}</span>
+          </div>
+        </div>
+        <div class="absolute right-8 h-32 w-32 opacity-40">
+          <img class="absolute h-32 w-32 top-0" [src]="getHeadImage(track.addedByImage)">
+          <img *ngIf="track.position === 1" class="relative h-32 w-32" src="/assets/images/crown.png">
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #loadingTemplate>
+    <svg class="z-10 w-20 h-20 m-auto" version="1.1" id="L5" xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 0 0"
+      xml:space="preserve">
+      <circle fill="#fff" stroke="none" cx="6" cy="50" r="6">
+        <animateTransform attributeName="transform" dur="1s" type="translate" values="0 15 ; 0 -15; 0 15"
+          repeatCount="indefinite" begin="0.1" />
+      </circle>
+      <circle fill="#fff" stroke="none" cx="30" cy="50" r="6">
+        <animateTransform attributeName="transform" dur="1s" type="translate" values="0 10 ; 0 -10; 0 10"
+          repeatCount="indefinite" begin="0.2" />
+      </circle>
+      <circle fill="#fff" stroke="none" cx="54" cy="50" r="6">
+        <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5"
+          repeatCount="indefinite" begin="0.3" />
+      </circle>
+    </svg>
+  </ng-template>
+  
+  <ng-template #noTracks>
+    <div class="text-center mt-4">
+      The countdown hasn't started yet 😭
+    </div>
+  </ng-template>
+  

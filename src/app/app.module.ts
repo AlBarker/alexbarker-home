@@ -13,6 +13,8 @@ import { Countdown2020Component } from './hottest-burn100/countdown2020/countdow
 import { Countdown2019Component } from './hottest-burn100/countdown2019/countdown2019.component';
 import { Countdown2018Component } from './hottest-burn100/countdown2018/countdown2018.component';
 import { Countdown2017Component } from './hottest-burn100/countdown2017/countdown2017.component';
+import { Countdown2023Component } from './hottest-burn100/countdown2023/countdown2023.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,13 +26,15 @@ import { Countdown2017Component } from './hottest-burn100/countdown2017/countdow
     Countdown2019Component,
     Countdown2018Component,
     Countdown2017Component,
+    Countdown2023Component,
     OrdinalPipe,
     AboutComponent,
     BrickbreakerComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
