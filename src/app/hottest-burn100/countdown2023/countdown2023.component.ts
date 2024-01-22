@@ -9,6 +9,7 @@ export interface TrackModel {
   addedByName: string;
   addedByImage: string;
   albumArt: string;
+  popularity: number;
 }
 
 @Component({

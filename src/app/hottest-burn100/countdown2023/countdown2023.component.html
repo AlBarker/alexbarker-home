@@ -30,7 +30,7 @@
                       </div>
                     </div>
                     <div class="flex w-full justify-between">
-                      <img class="animate-bounce h-40 w-40" [src]="getHeadImage(nowPlaying.addedByImage)">
+                      <img class="animate-bounce self-center h-40 w-40" [src]="getHeadImage(nowPlaying.addedByImage)">
                       <div class="flex flex-col items-center justify-between">
                         <div class="flex flex-col items-center">
                           <span class="text-xs">Track #</span>
@@ -39,6 +39,10 @@
                         <div *ngIf="tracksByUser$ | async let tracksByUser" class="text-xs pb-2">
                           <span>{{nowPlaying.addedByName}}'s {{tracksByUser[nowPlaying.addedByName] | ordinal}}
                             track</span>
+                        </div>
+                        <div class="relative w-full h-5 border text-sm border-white rounded-sm mt-6 text-left">
+                          <div class="absolute w-full h-full px-2 z-10">EDGE LVL: {{100 - nowPlaying.popularity}}%</div>
+                          <div class="absolute h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" [ngStyle]='{ width : 100 - nowPlaying.popularity + "%"}'></div>
                         </div>
                       </div>
                     </div>
@@ -68,6 +72,10 @@
                       <div class="text-xs mt-4 pb-2">
                         <span>{{nowPlaying.addedByName}}'s track</span>
                       </div>
+                      <div class="relative w-full h-5 border text-sm border-white rounded-sm mt-6 text-left">
+                        <div class="absolute w-full h-full px-2 z-10">EDGE LVL: {{100 - nowPlaying.popularity}}%</div>
+                        <div class="absolute h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" [ngStyle]='{ width : 100 - nowPlaying.popularity + "%"}'></div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -82,17 +90,21 @@
   
   
       <div class="flex p-4 mx-4 my-6 border-2 rounded border-slate-700" *ngFor="let track of tracks$ | async">
-        <div>
+        <div class="self-center">
           <div class="relative w-fit font-bold bottom-8 right-7 text-4xl rotate-[325deg]">{{track.position}}</div>
           <!-- <div class="font-bold text-4xl">{{track.position}}</div> -->
-          <img class=" w-40 -mt-10" [src]="getAlbumArt(track.albumArt)">
+          <img class="w-40 -mt-10" [src]="getAlbumArt(track.albumArt)">
         </div>
-        <div class="w-3/4 grow flex flex-col mx-4 z-10">
+        <div class="w-3/4 flex-shrink flex flex-col mx-4 z-10">
           <span class="font-bold">{{track.name}}</span>
           <span class="text-sm">{{track.artist}}</span>
           <!-- <span>{{track.addedByName}}</span> -->
           <div *ngIf="tracksByUser$ | async let tracksByUser">
             <span>Tracks so far: {{tracksByUser[track.addedByName]}}</span>
+          </div>
+          <div class="relative h-5 border text-sm border-white rounded-sm mt-6 text-left">
+            <div class="absolute w-full h-full px-2">EDGE LVL: {{100 - track.popularity}}%</div>
+            <div class="absolute h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 -z-10" [ngStyle]='{ width : 100 - track.popularity + "%"}'></div>
           </div>
         </div>
         <div class="absolute right-8 h-32 w-32 opacity-40">
@@ -100,6 +112,7 @@
           <img *ngIf="track.position === 1" class="relative h-32 w-32" src="/assets/images/crown.png">
         </div>
       </div>
+
     </div>
   </div>
   <ng-template #loadingTemplate>
