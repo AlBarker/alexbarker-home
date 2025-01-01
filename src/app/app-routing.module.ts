@@ -10,6 +10,7 @@ import { Countdown2022Component } from './hottest-burn100/countdown2022/countdow
 import { HottestBurn100Component } from './hottest-burn100/hottest-burn100.component';
 import { BrickbreakerComponent } from './brickbreaker/brickbreaker.component';
 import { Countdown2023Component } from './hottest-burn100/countdown2023/countdown2023.component';
+import { Countdown2024Component } from './hottest-burn100/countdown2024/countdown2024.component';
 
 const routes: Routes = [
   { path: '', component: AboutComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'hottest-burn100/2018', component: Countdown2018Component },
   { path: 'hottest-burn100/2017', component: Countdown2017Component },
   { path: 'hottest-burn100/2023', component: Countdown2023Component },
+  { path: 'hottest-burn100/2024', component: Countdown2024Component },
 ];
 
 @NgModule({

@@ -15,6 +15,7 @@ import { Countdown2018Component } from './hottest-burn100/countdown2018/countdow
 import { Countdown2017Component } from './hottest-burn100/countdown2017/countdown2017.component';
 import { Countdown2023Component } from './hottest-burn100/countdown2023/countdown2023.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Countdown2024Component } from './hottest-burn100/countdown2024/countdown2024.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     Countdown2018Component,
     Countdown2017Component,
     Countdown2023Component,
+    Countdown2024Component,
     OrdinalPipe,
     AboutComponent,
     BrickbreakerComponent,
