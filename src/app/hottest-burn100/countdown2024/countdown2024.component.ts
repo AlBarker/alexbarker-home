@@ -24,7 +24,7 @@ export class Countdown2024Component {
   public noTracksToShow$ = new BehaviorSubject<boolean>(false);
   public error$ = new Subject<string>;
   
-  private apiUrl = 'http://Online-Recip-mPNsYS0nIkk9-72409752.ap-southeast-2.elb.amazonaws.com/track/'
+  private apiUrl = 'http://Online-Recip-bbJ0iCAXCY7e-1619049089.ap-southeast-2.elb.amazonaws.com/track/'
 
   constructor(private httpClient: HttpClient) {
     this.nowPlayingTrack$ = this.getTracks().pipe(map((tracks) => tracks.shift()));
