@@ -55,6 +55,6 @@ export class Countdown2024Component {
   }
 
   getAlbumArt(fileName: string) {
-    return `${fileName}`;
+    return encodeURIComponent(`${fileName.slice(1)}`);
   }
 }
